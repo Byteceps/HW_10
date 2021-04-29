@@ -65,9 +65,9 @@ It works by taking the length of a given solution and inversing the returned len
 
 In this assignment Deme is the population of genetic ... 
 
-## Constructor and Destructor
+## Constructor and Destructor *Cole Nemec*
 
-The constructor and destructor were set to the default
+
 
 ## `get_best()` *Taylor Blair*
 
