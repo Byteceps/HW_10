@@ -2,10 +2,6 @@
  * Implementation for Chromosome class
  */
 
-#include <algorithm>
-#include <cassert>
-#include <random>
-
 #include "chromosome.hh"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -30,7 +26,14 @@ Chromosome::~Chromosome()
 void
 Chromosome::mutate()
 {
-  // Add your implementation here
+  //Initalize random number generator
+  std::random_device rd;
+  generator_ = std::default_random_engine(rd);
+  std::uniform_int_distribution<int> distr(0, order_.size());
+  //Swap Values In order_ permutation
+  auto randVal = distr(generator_);
+  auto randVal2 = distr(generator_);
+  std::iter_swap(order_.begin() + randVal, order_.begin() + randVal2);
 
   assert(is_valid());
 }
@@ -84,7 +87,12 @@ Chromosome::create_crossover_child(const Chromosome* p1, const Chromosome* p2,
 double
 Chromosome::get_fitness() const
 {
- return 1/calculate_total_distance(); 
+  //From Intro to GA's: We  also  need  to  be  careful  when  calculating  fitness.    
+  //The  clear  choice  for  the  evaluation function is the cost of the tour, but remember that a good tour is one whose cost  
+  //is low, so we need to calculate fitness so that a low cost tour is a high fitness individual. 
+  //One way to do this is to find the largest cost edge in the graph (say it hascost  K),  
+  //then  set  the  fitness  equal  to  N  *  K  –  (path  cost),  where  N  is  the  number  of  cities.  
+  //The makes a tour with a low path cost have a high fitness value.
 }
 
 // A chromsome is valid if it has no repeated values in its permutation,
@@ -127,5 +135,13 @@ Chromosome::is_valid() const
 bool
 Chromosome::is_in_range(unsigned value, unsigned begin, unsigned end) const
 {
-  // Add your implementation here
+  if (end < begin) {
+        assert(end < begin && "Begin value cannot be greater than end value\n");        // if begin is larger than end, raise an assert and print error message
+    }
+    for (auto i = begin; i < end; i++) {
+        if (this->order_[i] == value) {
+            return true;                                                                // scan through the list, if value is in list return true
+        }
+    }
+    return false;                                                                       // else return false
 }
