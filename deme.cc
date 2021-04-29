@@ -10,13 +10,20 @@
 // Also receives a mutation rate in the range [0-1].
 Deme::Deme(const Cities* cities_ptr, unsigned pop_size, double mut_rate)
 {
-  // Add your implementation here
+	if(mut_rate > 1.0 || mut_rate < 0.0){throw std::invalid_argument("Invalid mutation rate for a Deme. Ensure it's between 0-1.");} // Make sure mutation rate is within the range [0-1].
+
+    mut_rate_ = mut_rate;
+	for(unsigned i = 0; i < pop_size; ++i){
+		pop_.push_back(Chromosome(cities_ptr)); // Add a newly-generated Chromosome to pop_.
+				// Is the new keyword necessary here?
+	}
 }
 
 // Clean up as necessary
 Deme::~Deme()
 {
-  // Add your implementation here
+  pop_.clear(); //Remove/destroy all chromosomes from the pop_ vector.
+  std::vector<Chromosome*>().swap(pop_); // Create a vector without allocating any memory to it and swap it with pop_, deallocating the memory used by pop_.
 }
 
 // Evolve a single generation of new chromosomes, as follows:
