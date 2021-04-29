@@ -120,7 +120,9 @@ int main(int argc, char** argv)
     return -1;
   }
 
-  const auto cities = Cities(argv[1]);
+  auto fin = std::ifstream(argv[1]);
+  Cities cities;
+  fin >> cities;
   const auto pop_size = atoi(argv[2]);
   const auto mut_rate = atof(argv[3]);
   constexpr unsigned NUM_ITER = 100000;
@@ -136,8 +138,8 @@ int main(int argc, char** argv)
     std::cerr << "Can't open output file to record shortest path!\n";
     return -2;
   }
-
-  out << cities.reorder(best_ordering);
+  auto best_order = cities.reorder(best_ordering);
+  out << best_order;
 
   return 0;
 }
