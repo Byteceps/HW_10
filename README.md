@@ -53,8 +53,6 @@ It works by taking the length of a given solution and inversing the returned len
 ## `is_in_range()` *Aadit Bagdi*
 
 
-## `create_crossover_child()` **Unclaimed**
-
 
 ## `recombine()` *Aadit Bagdi & Julian Prince*
 
@@ -89,7 +87,7 @@ The returned chromosome is determined using the "Roulette Wheel" technique, whic
 * The individual for which P equals or exceeds R is the chosen individual.
 
 
-## `compute_next_generation()` **Unclaimed**
+## `compute_next_generation()` **Julian Prince**
 
 
 # TSP
