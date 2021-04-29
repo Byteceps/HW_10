@@ -9,13 +9,17 @@ Genetic algorithims are adept at this problem as it is an NP complete problem wh
 
 # `Cities`
 
-We are opting to use ([Aadit & Julian's solution](https://github.com/Byteceps/HW_9_Julian_Aadit) to Homework 9 for the base `Cities` class
+We opted to use [Aadit & Julian's solution](https://github.com/Byteceps/HW_9_Julian_Aadit) to Homework 9 for the base `Cities` class.
 
 # `Chromosome`
 
 The chromosome class is used...
 
 Intial code and outline was provided by Eitan Frachtenberg.
+
+## Constructor and Destructor
+
+The constructor and destructor were both set to the default
 
 ## `is_valid()` *Julian Prince*
 
@@ -36,9 +40,11 @@ This is the reward calculating component of the Chromosome class.
 
 It works by taking the length of a given solution and inversing the returned length, thus rewarding a shorter route.
 
-Using the inverse of the length could be problmatic as it increases rewards exponentially (d/dx of 1/x is ln(x), ln(x)=y is e^y=x). 
+Using the inverse of the length could be problmatic as it increases rewards exponentially (d/dx of 1/x is ln(x), ln(x)=y is e^y=x). In addition, there is a contraint as the returned value is a double. The larger the path, the greater the likelihood of truncation.  
 
 ## `mutate()` *Julian Prince*
+
+
 
 
 ## `is_in_range()` *Aadit Bagdi*
@@ -47,12 +53,18 @@ Using the inverse of the length could be problmatic as it increases rewards expo
 ## `create_crossover_child()` **Unclaimed**
 
 
-## `recombine()` *Aadit Bagdi*
+## `recombine()` *Aadit Bagdi & Julian Prince*
 
 
 # Deme
 
+`Deme` repesents a portion of the population (Derived from the greek word *demos*, or people)
+
+In this assignment Deme is the population of genetic ... 
+
 ## Constructor and Destructor
+
+The constructor and destructor were set to the default
 
 ## `get_best()` **Unclaimed**
 
@@ -60,8 +72,15 @@ Using the inverse of the length could be problmatic as it increases rewards expo
 ## `select_parent()` **Unclaimed**
 
 
+
 ## `compute_next_generation()` **Unclaimed**
 
+
+# TSP
+
+TSP, short for travelling salesperson problem, are the two files that encompass our main function.
+
+TAYLOR WILL PUT GRAPHS AND NUMBERS HERE HIGHLIGHTING THE IMPROVMENT.
 
 # Notes
 

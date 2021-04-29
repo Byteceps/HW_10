@@ -84,7 +84,7 @@ Chromosome::create_crossover_child(const Chromosome* p1, const Chromosome* p2,
 double
 Chromosome::get_fitness() const
 {
-  // Add your implementation here
+ return 1/calculate_total_distance(); 
 }
 
 // A chromsome is valid if it has no repeated values in its permutation,
