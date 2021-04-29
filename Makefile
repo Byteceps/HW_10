@@ -7,6 +7,13 @@ all:  tsp
 tsp: tsp.o chromosome.o deme.o cities.o
 	$(CXX) $(LDFLAGS) -o $@ $^
 
+deme: deme.o chromosome.o cities.o
+	$(CXX) $(LDFLAGS) -o $@ $^
+
+chromosome: chromosome.o cities.o
+	$(CXX) $(LDFLAGS) -o $@ $^
+
+
 %.o: %.cc %.hh
 	$(CXX) $(CXXFLAGS) $(OPTFLAGS) -c -o $@ $<
 
