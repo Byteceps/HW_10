@@ -48,6 +48,10 @@ class Cities {
     return cityList.size();
   }
 
+  unsigned size() const{ //Eitan's implementation
+    return cityList.size();
+  }
+
   //////////////////////////////////Operator Overloads//////////////////////////////////
   friend std::istream& operator>> (std::istream& input, Cities& city) {
     int x, y;                                                            // declare coordinates
