@@ -66,7 +66,8 @@ It works by taking the length of a given solution and inversing the returned len
 In this assignment Deme is the population of genetic ... 
 
 ## Constructor and Destructor *Cole Nemec*
-
+The constructor for a Deme checks that the passed mutation rate is within the valid range from 0 to 1, then sets the object's mut_rate and populates its population (`pop_`) with Chromosomes based upon the passed Cities pointer, up to the passed population size (`pop_size`).
+The destructor for a Deme `clear()`s the `pop_` vector, and then performs `swap()` upon a newly-created vector of the same type as `pop_` with the `pop_` vector, swapping the now-empty `pop_` with a vector that has no space allocated to it, effectively freeing the space previously taken by `pop_` when it was in use. 
 
 
 ## `get_best()` *Taylor Blair*
