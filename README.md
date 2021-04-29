@@ -1,28 +1,72 @@
-# HW 9: Julian Prince and Aadit Bagdi
+# HW 10: Traveling Salesperson Problem Part 2
 
-## The Exercise      
-The traveling-salesperson problem (TSP) is a problem that’s very simple to formulate, and yet impossible to solve efficiently. As described in this Wikipedia page, TSP asks the following question: "Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city and returns to the origin city?" In this assignment, we’ll write a program that searches for the best solution to the TSP problem among a set of randomized solutions.
+**By: Aadit Bagdi, Cole Nemec, Julian Prince, and Taylor Blair**
 
-## Building the program
-* This program can be compiled with the following commands:
-    * g++ -g -Wall -Wextra -pedantic -Werror -std=c++17 -fsanitize=address cities.cc tsp.cc -o city
+A continuation of HW 9 ([Aadit & Julian's solution](https://github.com/Byteceps/HW_9_Julian_Aadit), [Cole's solution](https://github.com/deeptronos/reed-csci221-hw9), [Taylor's solution](https://github.com/Goodernews/CS-221/tree/main/Homeworks/HW_9)). Tasked with improving upon a bogo route finding solution by using genetic algorithims to iteratively find a better route. 
 
-
-## Design Choices
-In the Cities class, we had to add two private data members: ```cityList``` and ```travelOrder```.
-```cityList``` is a vector of ```std::pair``` types. This acts as a list of (x, y) coordinate pairs, where each pair represents a cities location in the coordinate plane. 
-```travelOrder```is a vector of ```unsigned int``` types. This is a representation of the order in which each city is traveled to, and each int represents the index position of an ```std::pair``` in cityList.
-
-```Cities::total_path_distance(premutation_t& ordering)```: For a given permutation of the cities in this object, this function computes how long (distance) it would take to traverse all the cities in the order of the permutation, and then returning to the first city. We added an additional helper function ```distance_between(coord_t start, coord_t end)``` that computes the distance between two coordinate points using the distance formula. 
-
-```Cities::reorder(permutation&t ordering)```:Given a permutation, this function returns a new Cities object where the order of the cities reflects the original order of this class after reordering with the given ordering. So for example, the ordering { 1, 0 } simply swaps the first two elements (coordinates) in the new Cities object.
-
-```static random_permutation(unsigned len)```: returns a random permutation of integers in the range ```0``` to ```len - 1 ```. It does so by creating a vector of all integers in range ```0``` to ```len - 1```, and then randomly shuffling it using ```std::shuffle```
-
-We overloaded ```operator<<``` and ```operator>>``` to allow for the reading and writing of cities objects to a stream. This makes filling a Cities object with coordinate pairs stored in a ```.tsv``` file very easy, with notation like ```fin >> Cities```. Similarily, cities coordinate pairs can be easily output to a file with notation like ```fout << Cities```
+Genetic algorithims are adept at this problem as it is an NP complete problem where an optimal route can be found using reinforcment learning by swapping the orderings of various cities.
 
 
+# `Cities`
 
-```
+We are opting to use ([Aadit & Julian's solution](https://github.com/Byteceps/HW_9_Julian_Aadit) to Homework 9 for the base `Cities` class
 
-```
+# `Chromosome`
+
+The chromosome class is used...
+
+Intial code and outline was provided by Eitan Frachtenberg.
+
+## `is_valid()` *Julian Prince*
+
+`is_valid` is used to confirm that there is a complete ordering indiex vector
+
+Using the STL for the following process:
+ + The number of elements is counted
+	 + If size is less than one, then it is an invalid vector
+ + Copy of the vector is sorted
+ + Checks if there are any duplicates
+ 	+ If there is, then it is an invalid vector
+ + Checks if there are any gaps 
+ 	+ If there are, then the vector is invalid
+
+## `calculate_fitness()` *Julian Prince & Taylor Blair*
+
+This is the reward calculating component of the Chromosome class. 
+
+It works by taking the length of a given solution and inversing the returned length, thus rewarding a shorter route.
+
+Using the inverse of the length could be problmatic as it increases rewards exponentially (d/dx of 1/x is ln(x), ln(x)=y is e^y=x). 
+
+## `mutate()` *Julian Prince*
+
+
+## `is_in_range()` *Aadit Bagdi*
+
+
+## `create_crossover_child()` **Unclaimed**
+
+
+## `recombine()` *Aadit Bagdi*
+
+
+# Deme
+
+## Constructor and Destructor
+
+## `get_best()` **Unclaimed**
+
+
+## `select_parent()` **Unclaimed**
+
+
+## `compute_next_generation()` **Unclaimed**
+
+
+# Notes
+
+We would like to give a special thanks to the following individuals for assisting in both outlining, coding, and rubber ducking our code:
+ + [Eitan Frachtenberg](https://github.com/eitanf)
+	 + All files named
+ + Ian Wahbe
+	 + Recombine
