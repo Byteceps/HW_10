@@ -34,7 +34,13 @@ void Deme::compute_next_generation()
 // Return a copy of the chromosome with the highest fitness.
 const Chromosome* Deme::get_best() const
 {
-  // Add your implementation here
+  bool comp_fit = [] (auto city_a, auto city_b){ //used for comparisons
+	  return city_a->calculate_fitness()<city_b->calculate_fitness();};
+  //calls `calculate_fitness()` on two, compares which is better fit
+
+  Chromosome best_chrome = std::max(pop_.begin(), pop_.end(), comp_fit); //finds chromosome with best fit
+  Chromosome& copy_chrome = best_chrome; //makes a copy
+  return new(copy_chrome); //returns a pointer to the copy 
 }
 
 // Randomly select a chromosome in the population based on fitness and

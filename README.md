@@ -40,7 +40,10 @@ This is the reward calculating component of the Chromosome class.
 
 It works by taking the length of a given solution and inversing the returned length, thus rewarding a shorter route.
 
-Using the inverse of the length could be problmatic as it increases rewards exponentially (d/dx of 1/x is ln(x), ln(x)=y is e^y=x). In addition, there is a contraint as the returned value is a double. The larger the path, the greater the likelihood of truncation.  
+**Possible Future Challenges**
+ + Using the inverse of the length could be problmatic as it increases rewards exponentially (d/dx of 1/x is ln(x), ln(x)=y is e^y=x). 
+ + There is a contraint as the returned value is a double. The larger the distance, the greater the likelihood of truncation. 
+	 + We kept this solution because doubles are accurate to 15 decimal places, so unless the distance of the path is greater that 10^15, there will not be truncation. Furthermore, if the length is greater than 10^15, the distance of the path will overflow.  
 
 ## `mutate()` *Julian Prince*
 
@@ -66,8 +69,13 @@ In this assignment Deme is the population of genetic ...
 
 The constructor and destructor were set to the default
 
-## `get_best()` **Unclaimed**
+## `get_best()` *Taylor Blair*
 
+`get_best` returns a pointer to the chromosome with the best fitness.
+
+Using the STL to find the max chromosome in the `pop_` vector.
+
+Comparisons are performed using `comp_fitness()` which calls `calculate_fitness()` from the `Chromosome` class to make comparisons.
 
 ## `select_parent()` **Unclaimed**
 
@@ -84,8 +92,12 @@ TAYLOR WILL PUT GRAPHS AND NUMBERS HERE HIGHLIGHTING THE IMPROVMENT.
 
 # Notes
 
-We would like to give a special thanks to the following individuals for assisting in both outlining, coding, and rubber ducking our code:
+We would like to give a special thanks to the following individuals for their assistance in both outlining, coding, and rubber ducking our code:
  + [Eitan Frachtenberg](https://github.com/eitanf)
 	 + All files named
+ + [David Ramirez](https://www.reed.edu/faculty-profiles/profiles/ramirez-david.html)
+	 + `get_best`
+	 + `calculate_fitness`
+	 + `README.md`
  + Ian Wahbe
-	 + Recombine
+	 + `recombine`
