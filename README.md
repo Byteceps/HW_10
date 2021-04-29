@@ -78,8 +78,15 @@ Using the STL to find the max chromosome in the `pop_` vector.
 
 Comparisons are performed using `comp_fitness()` which calls `calculate_fitness()` from the `Chromosome` class to make comparisons.
 
-## `select_parent()` **Unclaimed**
+## `select_parent()` *Cole Nemec*
+Returns a pointer to a Chromosome. 
 
+The returned chromosome is determined using the "Roulette Wheel" technique, which is implemented here as follows:
+* Calculate S - the sum of the Deme's population's fitnesses.
+  * `std::acumulate()` was used for this step, and an additional function, `fitnessAccumulation()`, was created to serve as the `op` parameter in `accumulate`.
+* Generate R - a random number between 0 and S.
+* Starting from the top of the population, keep adding the fitness of each member of the population to the partial sum P, until P >= R.
+* The individual for which P equals or exceeds R is the chosen individual.
 
 
 ## `compute_next_generation()` **Unclaimed**

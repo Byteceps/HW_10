@@ -6,6 +6,7 @@
 #include "chromosome.hh"
 #include "deme.hh"
 
+
 // Generate a Deme of the specified size with all-random chromosomes.
 // Also receives a mutation rate in the range [0-1].
 Deme::Deme(const Cities* cities_ptr, unsigned pop_size, double mut_rate)
@@ -50,9 +51,37 @@ const Chromosome* Deme::get_best() const
   return new(copy_chrome); //returns a pointer to the copy 
 }
 
+// Function for op parameter of std::acumulate, as used in select_parent().
+double fitnessAccumulation(double sum, Chromosome* chromosome){
+	return sum + chromosome->get_fitness(); // Add the fitness of chromosome to sum and return it.
+}
+
 // Randomly select a chromosome in the population based on fitness and
 // return a pointer to that chromosome.
 Chromosome* Deme::select_parent()
 {
-  // Add your implementation here
+
+	double sumOfFitness = std::accumulate(pop_.begin(), pop_.end(), 0.0, fitnessAccumulation);
+
+	//Calculate S
+	for(Chromosome* pChromosome:pop_){ //For each chromosome in our population...
+		sumOfFitnesses += pChromosome->get_fitness(); // Add the chromosome's fitness to the sum.
+	}
+
+	//Calculate R
+	std::uniform_real_distribution<double> distribution (0.0, sumOfFitnesses); // distribution will return a double between 0 and sumOfFitness when called with a generator.
+	double R = distribution(generator_); // generate R.
+
+	double P; // Initialize P
+
+	for(Chromosome* chromo:pop_){ // For each chromosome in our population...
+		P += chromo->get_fitness(); // Add the fitness of the chromosome to P.
+
+		if(P >= R){ //If P exceeds R...
+			return chromo; // Return the current chromosome!
+		}
+	}
+
+	return nullptr; // Default return statement :P
+
 }
