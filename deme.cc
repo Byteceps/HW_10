@@ -40,14 +40,19 @@ void Deme::compute_next_generation()
 }
 
 // Return a copy of the chromosome with the highest fitness.
+
+bool comp_fit(Chromosome* city_a, Chromosome* city_b)
+{ //used for comparisons in get best
+	  return city_a->get_fitness()<city_b->get_fitness();
+}
+
+
 const Chromosome* Deme::get_best() const
 {
-  bool comp_fit = [] (auto city_a, auto city_b){ //used for comparisons
-	  return city_a->calculate_fitness()<city_b->calculate_fitness();};
-  //calls `calculate_fitness()` on two, compares which is better fit
 
-  Chromosome best_chrome = std::max(pop_.begin(), pop_.end(), comp_fit); //finds chromosome with best fit
-  Chromosome& copy_chrome = best_chrome; //makes a copy
+
+  auto best_chrome = std::max(pop_.begin(), pop_.end(), comp_fit); //finds chromosome with best fit
+  Chromosome& copy_chrome = *best_chrome; //makes a copy
   return new(copy_chrome); //returns a pointer to the copy 
 }
 
@@ -65,11 +70,11 @@ Chromosome* Deme::select_parent()
 
 	//Calculate S
 	for(Chromosome* pChromosome:pop_){ //For each chromosome in our population...
-		sumOfFitnesses += pChromosome->get_fitness(); // Add the chromosome's fitness to the sum.
+		sumOfFitness += pChromosome->get_fitness(); // Add the chromosome's fitness to the sum.
 	}
 
 	//Calculate R
-	std::uniform_real_distribution<double> distribution (0.0, sumOfFitnesses); // distribution will return a double between 0 and sumOfFitness when called with a generator.
+	std::uniform_real_distribution<double> distribution (0.0, sumOfFitness); // distribution will return a double between 0 and sumOfFitness when called with a generator.
 	double R = distribution(generator_); // generate R.
 
 	double P; // Initialize P
