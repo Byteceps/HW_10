@@ -48,12 +48,8 @@ bool comp_fit(Chromosome* city_a, Chromosome* city_b)
 
 
 const Chromosome* Deme::get_best() const
-{
-
-
-  auto best_chrome = std::max(pop_.begin(), pop_.end(), comp_fit); //finds chromosome with best fit
-  Chromosome& copy_chrome = *best_chrome; //makes a copy
-  return new(copy_chrome); //returns a pointer to the copy 
+{ 
+  return std::max_element(pop_.begin(), pop_.end(), comp_fit)[0]; //finds chromosome with best fit
 }
 
 // Function for op parameter of std::acumulate, as used in select_parent().
