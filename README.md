@@ -99,7 +99,7 @@ The tsp.cc file was created by Eitan Frachtenberg. Minor tweaks were made to mak
 
 Because we are using code borrowed from Aadit & Julians solution, we opted to use the routes and graphics they had generated. Previously, the best challenge route had a route distance of about 19,000.
 ![old-challenge-route](images/HW_9/challenge_route.gif) 
-*The* `shortest.tsv *in the upper right is a formatting mistake.*
+*The* `shortest.tsv` *in the upper right is a formatting mistake.*
 
 It took 100,000 iterations to find that route.
 ![old-challenge-speed(images/HW_9/challenge_speed.gif) 
