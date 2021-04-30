@@ -105,6 +105,8 @@ Chromosome::get_fitness() const
   //One way to do this is to find the largest cost edge in the graph (say it hascost  K),  
   //then  set  the  fitness  equal  to  N  *  K  –  (path  cost),  where  N  is  the  number  of  cities.  
   //The makes a tour with a low path cost have a high fitness value.
+  return 1;
+
 }
 
 // A chromsome is valid if it has no repeated values in its permutation,
@@ -138,6 +140,7 @@ Chromosome::is_valid() const
   //Vector is not of valid size
   return false;
   }
+  return true;
  }
 
 
