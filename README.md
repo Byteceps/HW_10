@@ -11,6 +11,8 @@ Genetic algorithims are adept at this problem as it is an NP complete problem wh
 
 We opted to use [Aadit & Julian's solution](https://github.com/Byteceps/HW_9_Julian_Aadit) to Homework 9 for the base `Cities` class.
 
+Minor changes were made to make the file compatible with the provided `TSP.cc` file.
+
 # `Chromosome`
 
 The chromosome class is used...
@@ -48,10 +50,7 @@ It works by taking the length of a given solution and inversing the returned len
 ## `mutate()` *Julian Prince*
 
 
-
-
 ## `is_in_range()` *Aadit Bagdi*
-
 
 
 ## `recombine()` *Aadit Bagdi & Julian Prince*
@@ -63,8 +62,8 @@ It works by taking the length of a given solution and inversing the returned len
 
 In this assignment Deme is the population of genetic ... 
 
-## Constructor and Destructor *Cole Nemec*
-The constructor for a Deme checks that the passed mutation rate is within the valid range from 0 to 1, then sets the object's mut_rate and populates its population (`pop_`) with Chromosomes based upon the passed Cities pointer, up to the passed population size (`pop_size`).
+## Constructor and Destructor *Cole Nemec & Taylor Blair*
+The constructor for a Deme checks that the passed mutation rate is within the valid range from 0 to 1, then sets the object's `mut_rate` and populates its population (`pop_`) with Chromosomes based upon the passed Cities pointer, up to the passed population size (`pop_size`).
 The destructor for a Deme `clear()`s the `pop_` vector, and then performs `swap()` upon a newly-created vector of the same type as `pop_` with the `pop_` vector, swapping the now-empty `pop_` with a vector that has no space allocated to it, effectively freeing the space previously taken by `pop_` when it was in use. 
 
 
@@ -76,7 +75,7 @@ Using the STL to find the max chromosome in the `pop_` vector.
 
 Comparisons are performed using `comp_fitness()` which calls `calculate_fitness()` from the `Chromosome` class to make comparisons.
 
-## `select_parent()` *Cole Nemec*
+## `select_parent()` *Cole Nemec & Taylor Blair*
 Returns a pointer to a Chromosome. 
 
 The returned chromosome is determined using the "Roulette Wheel" technique, which is implemented here as follows:
@@ -94,7 +93,20 @@ The returned chromosome is determined using the "Roulette Wheel" technique, whic
 
 TSP, short for travelling salesperson problem, are the two files that encompass our main function.
 
-TAYLOR WILL PUT GRAPHS AND NUMBERS HERE HIGHLIGHTING THE IMPROVMENT.
+The tsp.cc file was created by Eitan Frachtenberg. Minor tweaks were made to make it compatible with the `cities.cc` file made by Aadit & Julian.
+
+## Previous results
+
+Because we are using code borrowed from Aadit & Julians solution, we opted to use the routes and graphics they had generated. Previously, the best challenge route had a route distance of about 19,000.
+![old-challenge-route](images/HW_9/challenge_route.gif) 
+*The* `shortest.tsv *in the upper right is a formatting mistake.*
+
+It took 100,000 iterations to find that route.
+![old-challenge-speed(images/HW_9/challenge_speed.gif) 
+
+Of the 50 factorial routes, only 3.288*10^-57% are actually explored.
+
+
 
 # Notes
 

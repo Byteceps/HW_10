@@ -18,4 +18,4 @@ chromosome: chromosome.o cities.o
 	$(CXX) $(CXXFLAGS) $(OPTFLAGS) -c -o $@ $<
 
 clean:
-	rm -rf *.o *.gif tsp
+	rm -rf *.o tsp
