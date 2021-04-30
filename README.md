@@ -102,7 +102,8 @@ Because we are using code borrowed from Aadit & Julians solution, we opted to us
 *The* `shortest.tsv` *in the upper right is a formatting mistake.*
 
 It took 100,000 iterations to find that route.
-![old-challenge-speed(images/HW_9/challenge_speed.gif) 
+
+![old-challenge-speed](images/HW_9/challenge_speed.gif)
 
 Of the 50 factorial routes, only 3.288*10^-57% are actually explored.
 
