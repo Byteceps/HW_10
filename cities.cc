@@ -1,8 +1,5 @@
 #include "cities.hh"
-#include <vector>
-#include <istream>
-#include <ostream>
-#include <cmath>
+
 
 //Calculates distance between two points using sqrt( (x_2 - x_1)^2 + (y_2 - y_1)^2 )
 double distance_between(Cities::coord_t start, Cities::coord_t end){

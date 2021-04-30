@@ -13,6 +13,9 @@
 #include <utility>
 #include <cassert>
 #include <fstream>
+#include <istream>
+#include <ostream>
+
 
 // Representation of an ordering of cities
 class Cities {

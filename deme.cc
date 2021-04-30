@@ -11,8 +11,8 @@
 // Also receives a mutation rate in the range [0-1].
 Deme::Deme(const Cities* cities_ptr, unsigned pop_size, double mut_rate)
 {
-	if(mut_rate > 1.0 || mut_rate < 0.0){throw std::invalid_argument("Invalid mutation rate for a Deme. Ensure it's between 0-1.");} // Make sure mutation rate is within the range [0-1].
-
+	// Make sure mutation rate is within the range [0-1].
+	if(mut_rate > 1.0 || mut_rate < 0.0){throw std::invalid_argument("Invalid mutation rate for a Deme. Ensure it's between 0-1.");} 
     mut_rate_ = mut_rate;
 	for(unsigned i = 0; i < pop_size; ++i){
 		pop_.push_back(new Chromosome(cities_ptr)); // Add a newly-generated Chromosome to pop_.
@@ -36,14 +36,39 @@ Deme::~Deme()
 // After we've generated pop_size new chromosomes, we delete all the old ones.
 void Deme::compute_next_generation()
 {
-  // Add your implementation here
+  //Vector of chromosome pairs to store mutated chromosmes
+  std::vector< std::pair<Chromosome*, Chromosome*> > mutated_pairs;
+  //Initialize random number generator
+  std::random_device rd;
+  generator_ = std::default_random_engine(rd);
+  std::uniform_int_distribution<double> distr(0,1);
+  for(int i = 0; i < pop_.size() / 2; i++){
+    //Select 2 parents and two random numbers in range [0,1]
+    auto first_parent = select_parent();
+    auto second_parent = select_parent();
+    double first_rand = distr(generator_);
+    double second_rand = distr(generator_);
+    //If random num < mutation rate, mutate the assosciated child
+    if(first_rand < mut_rate_){first_parent->mutate();}
+    if(second_rand < mut_rate_){second_parent->mutate();}
+    //Store potentially mutated pair in vector
+    auto new_pair = first_parent->recombine(second_parent);
+    mutated_pairs.push_back(new_pair);
+  }
+  //Unpack vector of chromosome pairs into vector of chromosomes
+  std::vector<Chromosome*> pop;
+  std::transform(mutated_pairs.begin(), mutated_pairs.end(), std::back_inserter(pop), [&pop](const std::pair<Chromosome*, Chromosome*> &chrom)
+                                                                                  {pop.push_back(chrom.first);
+                                                                                   pop.push_back(chrom.second);}); //Might need to instead return chrom.second?
+  pop_ = pop;
+  return;
 }
 
 // Return a copy of the chromosome with the highest fitness.
 
 bool comp_fit(Chromosome* city_a, Chromosome* city_b)
 { //used for comparisons in get best
-	  return city_a->get_fitness()<city_b->get_fitness();
+	  return city_a->get_fitness() < city_b->get_fitness();
 }
 
 
@@ -65,7 +90,7 @@ Chromosome* Deme::select_parent()
 	double sumOfFitness = std::accumulate(pop_.begin(), pop_.end(), 0.0, fitnessAccumulation);
 
 	//Calculate S
-	for(Chromosome* pChromosome:pop_){ //For each chromosome in our population...
+	for(Chromosome* pChromosome : pop_){ //For each chromosome in our population...
 		sumOfFitness += pChromosome->get_fitness(); // Add the chromosome's fitness to the sum.
 	}
 
