@@ -47,8 +47,20 @@ Chromosome::recombine(const Chromosome* other)
   assert(is_valid());
   assert(other->is_valid());
 
-  // Add your implementation here
+  std::random_device rd;          //Would be good to initialize random engine inside the constructor instead of wherever it's called
+  generator_ = std::default_random_engine(rd);
+  std::uniform_int_distribution<int> distr(1, order_.size());
+
+  int rand = distr(generator_);
+  auto child1 = create_crossover_child(this, other, 0, rand );                       
+  auto child2 = create_crossover_child(other, this, rand +1, order_.size());
+  child1->mutate();                                                             // mutate first child
+  child2->mutate();                                                             // mutate second child
+  std::pair<Chromosome*, Chromosome*> family = std::make_pair(child1, child2);                           // make a std::pair of those two children
+  return family;
 }
+
+ 
 
 //////////////////////////////////////////////////////////////////////////////
 // For an ordered set of parents, return a child using the ordered crossover.
