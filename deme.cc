@@ -15,7 +15,7 @@ Deme::Deme(const Cities* cities_ptr, unsigned pop_size, double mut_rate)
 
     mut_rate_ = mut_rate;
 	for(unsigned i = 0; i < pop_size; ++i){
-		pop_.push_back(Chromosome(cities_ptr)); // Add a newly-generated Chromosome to pop_.
+		pop_.push_back(new Chromosome(cities_ptr)); // Add a newly-generated Chromosome to pop_.
 				// Is the new keyword necessary here?
 	}
 }
