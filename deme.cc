@@ -25,6 +25,8 @@ Deme::~Deme()
 {
   pop_.clear(); //Remove/destroy all chromosomes from the pop_ vector.
   std::vector<Chromosome*>().swap(pop_); // Create a vector without allocating any memory to it and swap it with pop_, deallocating the memory used by pop_.
+
+//Eitan thinks this is "completley unecessary, though you might need to look at the pointers"
 }
 
 // Evolve a single generation of new chromosomes, as follows:
@@ -40,9 +42,9 @@ void Deme::compute_next_generation()
   std::vector< std::pair<Chromosome*, Chromosome*> > mutated_pairs;
   //Initialize random number generator
   std::random_device rd;
-  generator_ = std::default_random_engine(rd);
-  std::uniform_int_distribution<double> distr(0,1);
-  for(int i = 0; i < pop_.size() / 2; i++){
+  generator_ = std::default_random_engine(rd());
+  std::uniform_real_distribution<double> distr(0,1);
+  for(unsigned long int i = 0; i < pop_.size() / 2; i++){
     //Select 2 parents and two random numbers in range [0,1]
     auto first_parent = select_parent();
     auto second_parent = select_parent();
