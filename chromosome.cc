@@ -28,7 +28,7 @@ Chromosome::mutate()
 {
   //Initalize random number generator
   std::random_device rd;
-  generator_ = std::default_random_engine(rd);
+  generator_ = std::default_random_engine(rd());
   std::uniform_int_distribution<int> distr(0, order_.size());
   //Swap Values In order_ permutation
   auto randVal = distr(generator_);
@@ -48,7 +48,7 @@ Chromosome::recombine(const Chromosome* other)
   assert(other->is_valid());
 
   std::random_device rd;          //Would be good to initialize random engine inside the constructor instead of wherever it's called
-  generator_ = std::default_random_engine(rd);
+  generator_ = std::default_random_engine(rd());
   std::uniform_int_distribution<int> distr(1, order_.size());
 
   int rand = distr(generator_);
