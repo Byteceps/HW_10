@@ -6,6 +6,7 @@
 #include "chromosome.hh"
 #include "deme.hh"
 
+//Need to initalize random number generator in the constructor, seed it constantly for debugging purposes
 
 // Generate a Deme of the specified size with all-random chromosomes.
 // Also receives a mutation rate in the range [0-1].
@@ -39,7 +40,7 @@ Deme::~Deme()
 void Deme::compute_next_generation()
 {
   //Vector of chromosome pairs to store mutated chromosmes
-  std::vector< std::pair<Chromosome*, Chromosome*> > mutated_pairs;
+  std::vector<Chromosome*> mutated_chromosomes;
   //Initialize random number generator
   std::random_device rd;
   generator_ = std::default_random_engine(rd());
@@ -55,14 +56,11 @@ void Deme::compute_next_generation()
     if(second_rand < mut_rate_){second_parent->mutate();}
     //Store potentially mutated pair in vector
     auto new_pair = first_parent->recombine(second_parent);
-    mutated_pairs.push_back(new_pair);
+    mutated_chromosomes.push_back(new_pair.first);
+    mutated_chromosomes.push_back(new_pair.second);
   }
   //Unpack vector of chromosome pairs into vector of chromosomes
-  std::vector<Chromosome*> pop;
-  std::transform(mutated_pairs.begin(), mutated_pairs.end(), std::back_inserter(pop), [&pop](const std::pair<Chromosome*, Chromosome*> &chrom)
-                                                                                  {pop.push_back(chrom.first);
-                                                                                   pop.push_back(chrom.second);}); //Might need to instead return chrom.second?
-  pop_ = pop;
+  pop_ = mutated_chromosomes;
   return;
 }
 
@@ -100,7 +98,7 @@ Chromosome* Deme::select_parent()
 	std::uniform_real_distribution<double> distribution (0.0, sumOfFitness); // distribution will return a double between 0 and sumOfFitness when called with a generator.
 	double R = distribution(generator_); // generate R.
 
-	double P; // Initialize P
+	double P = 0.0; // Initialize P
 
 	for(Chromosome* chromo:pop_){ // For each chromosome in our population...
 		P += chromo->get_fitness(); // Add the fitness of the chromosome to P.

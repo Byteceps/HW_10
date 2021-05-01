@@ -141,7 +141,7 @@ Chromosome::is_valid() const
   return false;
   }
   return true;
- }
+   }
 
 
 // Find whether a certain value appears in a given range of the chromosome.
