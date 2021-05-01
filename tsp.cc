@@ -44,7 +44,7 @@ randomized_search(const Cities& cities, uint64_t niter)
   auto best_dist = 1e100;
 
   for (uint64_t i = 0; i < niter; ++i) {
-    auto ordering = random_permutation(cities.size());
+    auto ordering = Cities::random_permutation(cities.size());
     if (is_improved(cities, ordering, best_dist, i)) {
       best_ordering = ordering;
     }
