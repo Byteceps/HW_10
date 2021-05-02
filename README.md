@@ -2,9 +2,9 @@
 
 **By: Aadit Bagdi, Cole Nemec, Julian Prince, and Taylor Blair**
 
-A continuation of HW 9 ([Aadit & Julian's solution](https://github.com/Byteceps/HW_9_Julian_Aadit), [Cole's solution](https://github.com/deeptronos/reed-csci221-hw9), [Taylor's solution](https://github.com/Goodernews/CS-221/tree/main/Homeworks/HW_9)). Tasked with improving upon a bogo route finding solution by using genetic algorithims to iteratively find a better route. 
+A continuation of HW 9 ([Aadit & Julian's solution](https://github.com/Byteceps/HW_9_Julian_Aadit), [Cole's solution](https://github.com/deeptronos/reed-csci221-hw9), [Taylor's solution](https://github.com/Goodernews/CS-221/tree/main/Homeworks/HW_9)). Tasked with improving upon a bogo route finding solution by using genetic algorithms to iteratively find a better route. 
 
-Genetic algorithims are adept at this problem as it is an NP complete problem where an optimal route can be found using reinforcment learning by swapping the orderings of various cities.
+Genetic algorithms are adept at this problem as it is an NP complete problem where an optimal route can be found using reinforcement learning by swapping the orderings of various cities.
 
 
 # `Cities`
@@ -17,7 +17,7 @@ Minor changes were made to make the file compatible with the provided `TSP.cc` f
 
 The chromosome class is used to define an individual gene. Each chromosome has an ordering 
 
-Intial code and outline was provided by Eitan Frachtenberg.
+Initial code and outline was provided by Eitan Frachtenberg.
 
 ## Constructor and Destructor
 
@@ -35,7 +35,7 @@ It creates a vector of booleans that represents what values it has seen in a the
 
 This is the reward calculating component of the Chromosome class. 
 
-It works by taking the length of a given solution and multiplies it by negative one. Because the distance is awlways a non-negative number, this means that the best fitness will be zero, and the worst will be negative infinity (ignoring the restrictions of a double). 
+It works by taking the length of a given solution and multiplies it by negative one. Because the distance is always a non-negative number, this means that the best fitness will be zero, and the worst will be negative infinity (ignoring the restrictions of a double). 
 
 ## `mutate()` *Julian Prince*
 
@@ -47,11 +47,11 @@ Checks that a given value is within a subset of a half open range of the orderin
 
 ## `recombine()` *Aadit Bagdi & Julian Prince*
 
-Creates two children from two parents using the `create_crossover_child` and `mutate` methods. Returns a pair of chromosones. 
+Creates two children from two parents using the `create_crossover_child` and `mutate` methods. Returns a pair of chromosomes. 
 
 # Deme
 
-`Deme` repesents a portion of the population (Derived from the greek word *demos*, or people)
+`Deme` represents a portion of the population (Derived from the greek word *demos*, or people)
 
 In this assignment Deme is the population of genetic ... 
 
