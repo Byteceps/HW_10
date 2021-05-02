@@ -1,6 +1,7 @@
 /*
  * Implementation for Chromosome class
  */
+#include <chrono>
 
 #include "chromosome.hh"
 
@@ -59,6 +60,10 @@ Chromosome::recombine(const Chromosome* other)
   child1->mutate();                                                             // mutate first child
   child2->mutate();                                                             // mutate second child
   std::pair<Chromosome*, Chromosome*> family = std::make_pair(child1, child2);                           // make a std::pair of those two children
+
+	assert(is_valid());
+	assert(other->is_valid());
+
   return family;
 }
 
@@ -79,7 +84,7 @@ Chromosome::create_crossover_child(const Chromosome* p1, const Chromosome* p2,
   unsigned i = 0, j = 0;
 
   for ( ; i < p1->order_.size() && j < p2->order_.size(); ++i) {
-    if (i >= b and i < e) {
+    if (i >= b && i < e) {
       child->order_[i] = p1->order_[i];
     }
     else { // Increment j as long as its value is in the [b,e) range of p1
@@ -115,30 +120,22 @@ Chromosome::get_fitness() const
 // as well as no indices above the range (length) of the chromosome.
 // We implement this check with a sort, which is a bit inefficient, but simple
 bool
-Chromosome::is_valid() const
-{
+Chromosome::is_valid() const {
 
-    //Copy order_ into a new vector for sorting
-    std::vector<unsigned int> order_copy;
-    order_copy = order_;
-    //Sort array and use std::adjacent_find to check for duplicate elements
-    std::sort(order_copy.begin(), order_copy.end());
-    auto iter = std::adjacent_find(order_copy.begin(), order_copy.end());
-    if(iter == order_copy.end()){
-      //Case where no duplicates found, then check there are no gaps 
-      auto it = std::adjacent_find(order_copy.begin(), order_copy.end(), [](int l, int r){return l+1<r;});
-      if(it == order_copy.end()){
-        //If iterator returned is to the end of the vector, then there are no pairs that differ by more than one
-        return true;
-      }
+	std::vector<bool> seen_vec; // a vector of values seen
+	seen_vec.resize(order_.size(), false); //sets all elements to false
 
-    }
+	for (long unsigned int i = 0; i < order_.size(); i++) {
+		if (seen_vec[order_[i]] == true) { // if seen before
+			return false;
+		} else {
+			seen_vec[order_[i]] = true; // marks as now seen
+		}
+	}
 
+	return true; //runs through list succesfully
 
-
-  return false;
-   }
-
+}
 
 // Find whether a certain value appears in a given range of the chromosome.
 // Returns true if value is within the specified the range specified

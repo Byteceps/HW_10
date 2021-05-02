@@ -24,6 +24,9 @@ class Chromosome {
   Chromosome& operator=(const Chromosome&) = delete;
   Chromosome& operator=(Chromosome&&) = delete;
 
+
+
+
  public:
   // Creation method for new Chromsomoe. Saves a copy of the cities and
   // generates a completely random permutation from a list of cities.
@@ -88,4 +91,5 @@ class Chromosome {
   Cities::permutation_t order_;  // The actual permutation of this chromosome
 
   std::default_random_engine generator_; // A random number generator for the various methods
+
 };

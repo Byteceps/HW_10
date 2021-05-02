@@ -79,7 +79,7 @@ const Chromosome* Deme::get_best() const
 
 // Function for op parameter of std::acumulate, as used in select_parent().
 double fitnessAccumulation(double sum, Chromosome* chromosome){
-	return sum + chromosome->get_fitness(); // Add the fitness of chromosome to sum and return it.
+	return sum - chromosome->get_fitness(); // Add the fitness of chromosome to sum and return it.
 }
 
 // Randomly select a chromosome in the population based on fitness and
@@ -89,19 +89,21 @@ Chromosome* Deme::select_parent()
 
 	double sumOfFitness = std::accumulate(pop_.begin(), pop_.end(), 0.0, fitnessAccumulation);
 
-	//Calculate S
-	for(Chromosome* pChromosome : pop_){ //For each chromosome in our population...
-		sumOfFitness += pChromosome->get_fitness(); // Add the chromosome's fitness to the sum.
-	}
-
 	//Calculate R
 	std::uniform_real_distribution<double> distribution (0.0, sumOfFitness); // distribution will return a double between 0 and sumOfFitness when called with a generator.
 	double R = distribution(generator_); // generate R.
 
+
+
 	double P = 0.0; // Initialize P
 
+	unsigned loopTracker = 0;
+
 	for(Chromosome* chromo:pop_){ // For each chromosome in our population...
-		P += chromo->get_fitness(); // Add the fitness of the chromosome to P.
+		std::cout << "chromo loop: " << loopTracker << std::endl;
+		++loopTracker;
+
+		P -= chromo->get_fitness(); // Add the fitness of the chromosome to P.
 
 		if(P >= R){ //If P exceeds R...
 			return chromo; // Return the current chromosome!
