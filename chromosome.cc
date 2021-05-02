@@ -8,9 +8,11 @@
 // Generate a completely random permutation from a list of cities
 Chromosome::Chromosome(const Cities* cities_ptr)
   : cities_ptr_(cities_ptr),
-    order_(Cities::random_permutation(cities_ptr->size())),
-    generator_(rand())
+    order_(Cities::random_permutation(cities_ptr->size()))
 {
+	unsigned seed1 = std::chrono::system_clock::now().time_since_epoch().count();
+	std::default_random_engine randEngine (seed1);
+	generator_ = randEngine;
   assert(is_valid());
 }
 
@@ -26,9 +28,9 @@ Chromosome::~Chromosome()
 void
 Chromosome::mutate()
 {
-  //Initalize random number generator
-  std::random_device rd;
-  generator_ = std::default_random_engine(rd());
+//  //Initalize random number generator
+//  std::random_device rd;
+//  generator_ = std::default_random_engine(rd());
   std::uniform_int_distribution<int> distr(0, order_.size());
   //Swap Values In order_ permutation
   auto randVal = distr(generator_);
@@ -47,13 +49,13 @@ Chromosome::recombine(const Chromosome* other)
   assert(is_valid());
   assert(other->is_valid());
 
-  std::random_device rd;          //Would be good to initialize random engine inside the constructor instead of wherever it's called
-  generator_ = std::default_random_engine(rd());
-  std::uniform_int_distribution<int> distr(1, order_.size());
+  //std::random_device rd;          //Would be good to initialize random engine inside the constructor instead of wherever it's called
+  //generator_ = std::default_random_engine(rd());
+  std::uniform_int_distribution<int> distr(0, order_.size());
 
   int rand = distr(generator_);
-  auto child1 = create_crossover_child(this, other, 0, rand );                       
-  auto child2 = create_crossover_child(other, this, rand +1, order_.size());
+  auto child1 = create_crossover_child(this, other, 0, rand + 1 );
+  auto child2 = create_crossover_child(other, this, rand, order_.size());
   child1->mutate();                                                             // mutate first child
   child2->mutate();                                                             // mutate second child
   std::pair<Chromosome*, Chromosome*> family = std::make_pair(child1, child2);                           // make a std::pair of those two children
@@ -115,7 +117,7 @@ Chromosome::get_fitness() const
 bool
 Chromosome::is_valid() const
 {
-  if(order_.size() > 1){
+
     //Copy order_ into a new vector for sorting
     std::vector<unsigned int> order_copy;
     order_copy = order_;
@@ -129,18 +131,12 @@ Chromosome::is_valid() const
         //If iterator returned is to the end of the vector, then there are no pairs that differ by more than one
         return true;
       }
-      else{
-        return false;
-      }
+
     }
-    else{
-      //Vector does have duplicate values
-      return false;
-    }
-  //Vector is not of valid size
+
+
+
   return false;
-  }
-  return true;
    }
 
 
