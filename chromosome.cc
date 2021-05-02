@@ -4,7 +4,7 @@
 #include <chrono>
 
 #include "chromosome.hh"
-void printOrder(Cities::permutation_t ordering){
+void printOrder(Cities::permutation_t ordering){ // Helper function to print an order_
 	std::cout << "Ordering: ";
 	for(unsigned o: ordering){
 		std::cout << o <<' ';
@@ -44,10 +44,7 @@ Chromosome::mutate()
   //Swap Values In order_ permutation
   auto randVal = distr(generator_);
   auto randVal2 = distr(generator_);
-  std::cout  << "randVal: " << randVal << ", randVal2: " << randVal2 << std::endl;
-  printOrder(order_);
   std::iter_swap(order_.begin() + randVal, order_.begin() + randVal2);
-  printOrder(order_);
 
   assert(is_valid());
 }

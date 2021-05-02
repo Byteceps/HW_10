@@ -103,11 +103,8 @@ Chromosome* Deme::select_parent()
 
 	double P = 0.0; // Initialize P
 
-	unsigned loopTracker = 0;
 
 	for(Chromosome* chromo:pop_){ // For each chromosome in our population...
-		std::cout << "chromo loop: " << loopTracker << std::endl;
-		++loopTracker;
 
 		P -= chromo->get_fitness(); // Add the fitness of the chromosome to P.
 
