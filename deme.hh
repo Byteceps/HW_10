@@ -34,7 +34,7 @@ class Deme {
  protected:
   // Randomly select a chromosome in the population based on fitness and
   // return a pointer to that chromosome.
-  virtual Chromosome* select_parent();
+  virtual Chromosome* select_parent() ;
 
   using pop_t = std::vector<Chromosome*>;  // Population of Chromosomes
   pop_t pop_;  // Population of Chromosomes

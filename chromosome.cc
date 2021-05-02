@@ -4,6 +4,14 @@
 #include <chrono>
 
 #include "chromosome.hh"
+void printOrder(Cities::permutation_t ordering){
+	std::cout << "Ordering: ";
+	for(unsigned o: ordering){
+		std::cout << o <<' ';
+	}
+	std::cout << std::endl;
+
+}
 
 //////////////////////////////////////////////////////////////////////////////
 // Generate a completely random permutation from a list of cities
@@ -32,11 +40,14 @@ Chromosome::mutate()
 //  //Initalize random number generator
 //  std::random_device rd;
 //  generator_ = std::default_random_engine(rd());
-  std::uniform_int_distribution<int> distr(0, order_.size());
+  std::uniform_int_distribution<int> distr(0, order_.size() - 1);
   //Swap Values In order_ permutation
   auto randVal = distr(generator_);
   auto randVal2 = distr(generator_);
+  std::cout  << "randVal: " << randVal << ", randVal2: " << randVal2 << std::endl;
+  printOrder(order_);
   std::iter_swap(order_.begin() + randVal, order_.begin() + randVal2);
+  printOrder(order_);
 
   assert(is_valid());
 }
@@ -52,11 +63,11 @@ Chromosome::recombine(const Chromosome* other)
 
   //std::random_device rd;          //Would be good to initialize random engine inside the constructor instead of wherever it's called
   //generator_ = std::default_random_engine(rd());
-  std::uniform_int_distribution<int> distr(0, order_.size());
+  std::uniform_int_distribution<int> distr(1, order_.size());
 
   int rand = distr(generator_);
-  auto child1 = create_crossover_child(this, other, 0, rand + 1 );
-  auto child2 = create_crossover_child(other, this, rand, order_.size());
+  auto child1 = create_crossover_child(this, other, 0, rand );
+  auto child2 = create_crossover_child(other, this, rand, order_.size() - 1);
   child1->mutate();                                                             // mutate first child
   child2->mutate();                                                             // mutate second child
   std::pair<Chromosome*, Chromosome*> family = std::make_pair(child1, child2);                           // make a std::pair of those two children
@@ -143,13 +154,10 @@ Chromosome::is_valid() const {
 bool
 Chromosome::is_in_range(unsigned value, unsigned begin, unsigned end) const
 {
-  if (end < begin) {
-        assert(end < begin && "Begin value cannot be greater than end value\n");        // if begin is larger than end, raise an assert and print error message
-    }
-    for (auto i = begin; i < end; i++) {
-        if (this->order_[i] == value) {
-            return true;                                                                // scan through the list, if value is in list return true
-        }
-    }
-    return false;                                                                       // else return false
+	for (auto i = begin; i < end; i++) {
+		if (this->order_[i] == value) {
+			return true;                                                                // scan through the list, if value is in list return true
+		}
+	}
+	return false;                                                                       // else return false
 }

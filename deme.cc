@@ -6,6 +6,10 @@
 #include "chromosome.hh"
 #include "deme.hh"
 
+
+
+
+
 //Need to initalize random number generator in the constructor, seed it constantly for debugging purposes
 
 // Generate a Deme of the specified size with all-random chromosomes.
@@ -24,6 +28,9 @@ Deme::Deme(const Cities* cities_ptr, unsigned pop_size, double mut_rate)
 // Clean up as necessary
 Deme::~Deme()
 {
+  for(Chromosome* chrom:pop_){
+  	delete chrom;
+  }
   pop_.clear(); //Remove/destroy all chromosomes from the pop_ vector.
   std::vector<Chromosome*>().swap(pop_); // Create a vector without allocating any memory to it and swap it with pop_, deallocating the memory used by pop_.
 
@@ -92,7 +99,6 @@ Chromosome* Deme::select_parent()
 	//Calculate R
 	std::uniform_real_distribution<double> distribution (0.0, sumOfFitness); // distribution will return a double between 0 and sumOfFitness when called with a generator.
 	double R = distribution(generator_); // generate R.
-
 
 
 	double P = 0.0; // Initialize P
