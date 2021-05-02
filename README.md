@@ -15,7 +15,7 @@ Minor changes were made to make the file compatible with the provided `TSP.cc` f
 
 # `Chromosome`
 
-The chromosome class is used...
+The chromosome class is used to define an individual gene. Each chromosome has an ordering 
 
 Intial code and outline was provided by Eitan Frachtenberg.
 
@@ -23,38 +23,31 @@ Intial code and outline was provided by Eitan Frachtenberg.
 
 The constructor and destructor were both set to the default
 
-## `is_valid()` *Julian Prince*
+## `is_valid()` *Julian Prince & Taylor Blair*
 
-`is_valid` is used to confirm that there is a complete ordering indiex vector
+`is_valid` is used to confirm that there is a complete ordering index vector
 
-Using the STL for the following process:
- + The number of elements is counted
-	 + If size is less than one, then it is an invalid vector
- + Copy of the vector is sorted
- + Checks if there are any duplicates
- 	+ If there is, then it is an invalid vector
- + Checks if there are any gaps 
- 	+ If there are, then the vector is invalid
+It has an O(n) complexity.
+
+It creates a vector of booleans that represents what values it has seen in a theoretical ordering. It goes through the ordering list element by element. If it hasn't seen an element before (value appears as false in the seen vector) it flips the boolean to true at the given indice. If it has seen an element before, it returns false.
 
 ## `calculate_fitness()` *Julian Prince & Taylor Blair*
 
 This is the reward calculating component of the Chromosome class. 
 
-It works by taking the length of a given solution and inversing the returned length, thus rewarding a shorter route.
-
-**Possible Future Challenges**
- + Using the inverse of the length could be problmatic as it increases rewards exponentially (d/dx of 1/x is ln(x), ln(x)=y is e^y=x). 
- + There is a contraint as the returned value is a double. The larger the distance, the greater the likelihood of truncation. 
-	 + We kept this solution because doubles are accurate to 15 decimal places, so unless the distance of the path is greater that 10^15, there will not be truncation. Furthermore, if the length is greater than 10^15, the distance of the path will overflow.  
+It works by taking the length of a given solution and multiplies it by negative one. Because the distance is awlways a non-negative number, this means that the best fitness will be zero, and the worst will be negative infinity (ignoring the restrictions of a double). 
 
 ## `mutate()` *Julian Prince*
 
+Picks two random numbers within the size of the index and swaps the ordering at those two index values using `std::iter_swap`.
 
-## `is_in_range()` *Aadit Bagdi*
+## `is_in_range()` *Aadit Bagdi & Cole Nemec*
 
+Checks that a given value is within a subset of a half open range of the ordering.
 
 ## `recombine()` *Aadit Bagdi & Julian Prince*
 
+Creates two children from two parents using the `create_crossover_child` and `mutate` methods. Returns a pair of chromosones. 
 
 # Deme
 
@@ -87,6 +80,7 @@ The returned chromosome is determined using the "Roulette Wheel" technique, whic
 
 
 ## `compute_next_generation()` **Julian Prince**
+
 
 
 # TSP
