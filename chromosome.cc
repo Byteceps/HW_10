@@ -33,11 +33,21 @@ Chromosome::mutate()
 //  //Initalize random number generator
 //  std::random_device rd;
 //  generator_ = std::default_random_engine(rd());
+  /*std::cout << "old perm: "  << std::endl;
+  for (unsigned int i = 0; i < this->order_.size(); i++) {
+    std::cout << this->order_[i] << " ";
+  }
+  std::cout << std::endl;*/
   std::uniform_int_distribution<int> distr(0, order_.size() - 1);
   //Swap Values In order_ permutation
   auto randVal = distr(generator_);
   auto randVal2 = distr(generator_);
   std::iter_swap(order_.begin() + randVal, order_.begin() + randVal2);
+  /*std::cout << "new perm: "  << std::endl;
+  for (unsigned int i = 0; i < this->order_.size(); i++) {
+    std::cout << this->order_[i] << " ";
+  }
+  std::cout << std::endl;*/
 
   assert(is_valid());
 }
