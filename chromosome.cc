@@ -4,14 +4,7 @@
 #include <chrono>
 
 #include "chromosome.hh"
-void printOrder(Cities::permutation_t ordering){ // Helper function to print an order_
-	std::cout << "Ordering: ";
-	for(unsigned o: ordering){
-		std::cout << o <<' ';
-	}
-	std::cout << std::endl;
 
-}
 
 //////////////////////////////////////////////////////////////////////////////
 // Generate a completely random permutation from a list of cities

@@ -8,8 +8,6 @@
 
 
 
-
-
 //Need to initalize random number generator in the constructor, seed it constantly for debugging purposes
 
 // Generate a Deme of the specified size with all-random chromosomes.
@@ -31,10 +29,7 @@ Deme::~Deme()
   for(Chromosome* chrom:pop_){
   	delete chrom;
   }
-  pop_.clear(); //Remove/destroy all chromosomes from the pop_ vector.
-  std::vector<Chromosome*>().swap(pop_); // Create a vector without allocating any memory to it and swap it with pop_, deallocating the memory used by pop_.
 
-//Eitan thinks this is "completley unecessary, though you might need to look at the pointers"
 }
 
 // Evolve a single generation of new chromosomes, as follows:
@@ -67,8 +62,11 @@ void Deme::compute_next_generation()
     mutated_chromosomes.push_back(new_pair.second);
   }
   //Unpack vector of chromosome pairs into vector of chromosomes
+  for (auto& elem:pop_){
+	delete elem;
+  }
   pop_ = mutated_chromosomes;
-  return;
+
 }
 
 // Return a copy of the chromosome with the highest fitness.
