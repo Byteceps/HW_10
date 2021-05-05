@@ -15,8 +15,7 @@
 Deme::Deme(const Cities* cities_ptr, unsigned pop_size, double mut_rate)
 {
 	// Make sure mutation rate is within the range [0-1].
-	if(mut_rate > 1.0 || mut_rate < 0.0){throw std::invalid_argument("Invalid mutation rate for a Deme. Ensure it's between 0-1.");} 
-    mut_rate_ = mut_rate;
+  mut_rate_ = mut_rate;
 	for(unsigned i = 0; i < pop_size; ++i){
 		pop_.push_back(new Chromosome(cities_ptr)); // Add a newly-generated Chromosome to pop_.
 				// Is the new keyword necessary here?
@@ -29,7 +28,6 @@ Deme::~Deme()
   for(Chromosome* chrom:pop_){
   	delete chrom;
   }
-
 }
 
 // Evolve a single generation of new chromosomes, as follows:
@@ -68,7 +66,7 @@ void Deme::compute_next_generation()
   }
   //Unpack vector of chromosome pairs into vector of chromosomes
   for (auto& elem:pop_){
-	delete elem;
+	delete elem; //release memory
   }
   pop_ = mutated_chromosomes;
 
