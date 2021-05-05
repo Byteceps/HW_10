@@ -55,10 +55,10 @@ void Deme::compute_next_generation()
     double second_rand = distr(generator_);
 
     //If random num < mutation rate, mutate the assosciated child
-    if(first_rand < mut_rate_){
+    if(first_rand <= mut_rate_){
 	    first_parent->mutate();
     }
-    if(second_rand < mut_rate_){
+    if(second_rand <= mut_rate_){
 	    second_parent->mutate();
     }
     //Store potentially mutated pair in vector
