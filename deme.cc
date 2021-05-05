@@ -52,7 +52,7 @@ void Deme::compute_next_generation()
     double first_rand = distr(generator_);
     double second_rand = distr(generator_);
 
-    //If random num <= mutation rate, mutate the assosciated child
+    //If random num < mutation rate, mutate the assosciated child
     if(first_rand <= mut_rate_){
 	    first_parent->mutate();
     }
