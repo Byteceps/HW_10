@@ -125,7 +125,7 @@ int main(int argc, char** argv)
   fin >> cities;
   const auto pop_size = atoi(argv[2]);
   const auto mut_rate = atof(argv[3]);
-  constexpr unsigned NUM_ITER = 20000;
+  constexpr unsigned NUM_ITER = 1000000;
   assert(cities.size() > 0 && "Did you actually read the input file successfully?");
 
 

@@ -53,9 +53,14 @@ void Deme::compute_next_generation()
     auto second_parent = select_parent();
     double first_rand = distr(generator_);
     double second_rand = distr(generator_);
+
     //If random num < mutation rate, mutate the assosciated child
-    if(first_rand < mut_rate_){first_parent->mutate();}
-    if(second_rand < mut_rate_){second_parent->mutate();}
+    if(first_rand <= mut_rate_){
+	    first_parent->mutate();
+    }
+    if(second_rand <= mut_rate_){
+	    second_parent->mutate();
+    }
     //Store potentially mutated pair in vector
     auto new_pair = first_parent->recombine(second_parent);
     mutated_chromosomes.push_back(new_pair.first);
@@ -79,7 +84,8 @@ bool comp_fit(Chromosome* city_a, Chromosome* city_b)
 
 const Chromosome* Deme::get_best() const
 { 
-  return std::max_element(pop_.begin(), pop_.end(), comp_fit)[0]; //finds chromosome with best fit
+	return *std::max_element(pop_.begin(), pop_.end(), comp_fit); //finds chromosome with best fit
+
 }
 
 // Function for op parameter of std::acumulate, as used in select_parent().
