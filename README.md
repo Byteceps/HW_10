@@ -58,7 +58,7 @@ In this assignment Deme is the population of genetic ...
 
 ## Constructor and Destructor *Cole Nemec & Taylor Blair*
 The constructor for a Deme checks that the passed mutation rate is within the valid range from 0 to 1, then sets the object's `mut_rate` and populates its population (`pop_`) with Chromosomes based upon the passed Cities pointer, up to the passed population size (`pop_size`).
-The destructor for a Deme `clear()`s the `pop_` vector, and then performs `swap()` upon a newly-created vector of the same type as `pop_` with the `pop_` vector, swapping the now-empty `pop_` with a vector that has no space allocated to it, effectively freeing the space previously taken by `pop_` when it was in use. 
+The destructor for a Deme `delete`s each member of the `pop_`,
 
 
 ## `get_best()` *Taylor Blair*
@@ -69,7 +69,7 @@ Using the STL to find the max chromosome in the `pop_` vector.
 
 Comparisons are performed using `comp_fitness()` which calls `calculate_fitness()` from the `Chromosome` class to make comparisons.
 
-## `select_parent()` *Cole Nemec & Taylor Blair*
+## `select_parent()` *Cole Nemec*
 Returns a pointer to a Chromosome. 
 
 The returned chromosome is determined using the "Roulette Wheel" technique, which is implemented here as follows:

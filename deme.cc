@@ -88,7 +88,7 @@ const Chromosome* Deme::get_best() const
 
 }
 
-// Function for parameter of std::accmulate, as used in select_parent().
+// Function for parameter of std::accumulate, as used in select_parent().
 double fitnessAccumulation(double sum, Chromosome* chromosome){
 	return sum - chromosome->get_fitness(); // Add the fitness of chromosome to sum and return it.
 }
@@ -97,14 +97,14 @@ double fitnessAccumulation(double sum, Chromosome* chromosome){
 // return a pointer to that chromosome.
 Chromosome* Deme::select_parent()
 {
-	double sumOfFitness = std::accumulate(pop_.begin(), pop_.end(), 0.0, fitnessAccumulation);
+	double sumOfFitness = std::accumulate(pop_.begin(), pop_.end(), 0.0, fitnessAccumulation); // Use STL to find sum.
 
-	//Calculate R
+	//Calculate R.
 	std::uniform_real_distribution<double> distribution (0.0, sumOfFitness); // distribution will return a double between 0 and sumOfFitness when called with a generator.
 	double R = distribution(generator_); // generate R.
 
 
-	double P = 0.0; // Initialize P
+	double P = 0.0; // Initialize P.
 
 
 	for(Chromosome* chromo:pop_){ // For each chromosome in our population...
