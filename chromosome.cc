@@ -1,7 +1,7 @@
 /*
  * Implementation for Chromosome class
  */
-#include <chrono>
+
 
 #include "chromosome.hh"
 
@@ -30,25 +30,11 @@ Chromosome::~Chromosome()
 void
 Chromosome::mutate()
 {
-//  //Initalize random number generator
-//  std::random_device rd;
-//  generator_ = std::default_random_engine(rd());
-  /*std::cout << "old perm: "  << std::endl;
-  for (unsigned int i = 0; i < this->order_.size(); i++) {
-    std::cout << this->order_[i] << " ";
-  }
-  std::cout << std::endl;*/
   std::uniform_int_distribution<int> distr(0, order_.size() - 1);
-  //Swap Values In order_ permutation
+  //Swap random Values in order_ 
   auto randVal = distr(generator_);
   auto randVal2 = distr(generator_);
   std::iter_swap(order_.begin() + randVal, order_.begin() + randVal2);
-  /*std::cout << "new perm: "  << std::endl;
-  for (unsigned int i = 0; i < this->order_.size(); i++) {
-    std::cout << this->order_[i] << " ";
-  }
-  std::cout << std::endl;*/
-
   assert(is_valid());
 }
 
@@ -61,16 +47,14 @@ Chromosome::recombine(const Chromosome* other)
   assert(is_valid());
   assert(other->is_valid());
 
-  //std::random_device rd;          //Would be good to initialize random engine inside the constructor instead of wherever it's called
-  //generator_ = std::default_random_engine(rd());
   std::uniform_int_distribution<int> distr(1, order_.size());
-
   int rand = distr(generator_);
+  //Slice from 0 - random index for first child, and from random index to end for the second
   auto child1 = create_crossover_child(this, other, 0, rand );
   auto child2 = create_crossover_child(other, this, rand, order_.size() - 1);
-  child1->mutate();                                                             // mutate first child
-  child2->mutate();                                                             // mutate second child
-  std::pair<Chromosome*, Chromosome*> family = std::make_pair(child1, child2);                           // make a std::pair of those two children
+  child1->mutate();                                                            
+  child2->mutate();                                                            
+  std::pair<Chromosome*, Chromosome*> family = std::make_pair(child1, child2);          
 
 	assert(is_valid());
 	assert(other->is_valid());
@@ -117,14 +101,7 @@ Chromosome::create_crossover_child(const Chromosome* p1, const Chromosome* p2,
 double
 Chromosome::get_fitness() const
 {
-  //From Intro to GA's: We  also  need  to  be  careful  when  calculating  fitness.    
-  //The  clear  choice  for  the  evaluation function is the cost of the tour, but remember that a good tour is one whose cost  
-  //is low, so we need to calculate fitness so that a low cost tour is a high fitness individual. 
-  //One way to do this is to find the largest cost edge in the graph (say it hascost  K),  
-  //then  set  the  fitness  equal  to  N  *  K  –  (path  cost),  where  N  is  the  number  of  cities.  
-  //The makes a tour with a low path cost have a high fitness value.
   return -1*calculate_total_distance();
-
 }
 
 // A chromsome is valid if it has no repeated values in its permutation,

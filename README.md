@@ -49,6 +49,7 @@ Checks that a given value is within a subset of a half open range of the orderin
 
 Creates two children from two parents using the `create_crossover_child` and `mutate` methods. Returns a pair of chromosomes. 
 
+
 # Deme
 
 `Deme` represents a portion of the population (Derived from the greek word *demos*, or people)
@@ -81,7 +82,7 @@ The returned chromosome is determined using the "Roulette Wheel" technique, whic
 
 ## `compute_next_generation()` **Julian Prince**
 
-
+```compute_next_generation()``` evolves a single generation of chromosomes. This method selects `pop_size / 2` pairs of chromosomes through the `select_parent()` method. Each chromosome in the pair has `mut_rate` probability of being selected for mutation. The new pair is `recombine()`'d to generate a new pair of chromosomes stored in the deme. After `pop_size` new chromsomes have been generated, the old generation is deleted. 
 
 # TSP
 
