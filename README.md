@@ -49,6 +49,7 @@ Checks that a given value is within a subset of a half open range of the orderin
 
 Creates two children from two parents using the `create_crossover_child` and `mutate` methods. Returns a pair of chromosomes. 
 
+
 # Deme
 
 `Deme` represents a portion of the population (Derived from the greek word *demos*, or people)
@@ -57,7 +58,7 @@ In this assignment Deme is the population of genetic ...
 
 ## Constructor and Destructor *Cole Nemec & Taylor Blair*
 The constructor for a Deme checks that the passed mutation rate is within the valid range from 0 to 1, then sets the object's `mut_rate` and populates its population (`pop_`) with Chromosomes based upon the passed Cities pointer, up to the passed population size (`pop_size`).
-The destructor for a Deme `clear()`s the `pop_` vector, and then performs `swap()` upon a newly-created vector of the same type as `pop_` with the `pop_` vector, swapping the now-empty `pop_` with a vector that has no space allocated to it, effectively freeing the space previously taken by `pop_` when it was in use. 
+The destructor for a Deme `delete`s each member of the `pop_`,
 
 
 ## `get_best()` *Taylor Blair*
@@ -68,7 +69,7 @@ Using the STL to find the max chromosome in the `pop_` vector.
 
 Comparisons are performed using `comp_fitness()` which calls `calculate_fitness()` from the `Chromosome` class to make comparisons.
 
-## `select_parent()` *Cole Nemec & Taylor Blair*
+## `select_parent()` *Cole Nemec*
 Returns a pointer to a Chromosome. 
 
 The returned chromosome is determined using the "Roulette Wheel" technique, which is implemented here as follows:
@@ -81,7 +82,7 @@ The returned chromosome is determined using the "Roulette Wheel" technique, whic
 
 ## `compute_next_generation()` **Julian Prince**
 
-
+```compute_next_generation()``` evolves a single generation of chromosomes. This method selects `pop_size / 2` pairs of chromosomes through the `select_parent()` method. Each chromosome in the pair has `mut_rate` probability of being selected for mutation. The new pair is `recombine()`'d to generate a new pair of chromosomes stored in the deme. After `pop_size` new chromsomes have been generated, the old generation is deleted. 
 
 # TSP
 

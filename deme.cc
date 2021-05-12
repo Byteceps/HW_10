@@ -15,10 +15,11 @@
 Deme::Deme(const Cities* cities_ptr, unsigned pop_size, double mut_rate)
 {
 	// Make sure mutation rate is within the range [0-1].
-  mut_rate_ = mut_rate;
+	if(mut_rate > 1.0 || mut_rate < 0.0){throw std::invalid_argument("Invalid mutation rate for a Deme. Ensure it's between 0 - 1.0.");}
+
+	mut_rate_ = mut_rate;
 	for(unsigned i = 0; i < pop_size; ++i){
 		pop_.push_back(new Chromosome(cities_ptr)); // Add a newly-generated Chromosome to pop_.
-				// Is the new keyword necessary here?
 	}
 }
 
@@ -42,8 +43,8 @@ void Deme::compute_next_generation()
   //Vector of chromosome pairs to store mutated chromosmes
   std::vector<Chromosome*> mutated_chromosomes;
   //Initialize random number generator
-  std::random_device rd;
-  generator_ = std::default_random_engine(rd());
+  //std::random_device rd;
+  //generator_ = std::default_random_engine(rd());
   std::uniform_real_distribution<double> distr(0,1);
   for(unsigned long int i = 0; i < pop_.size() / 2; i++){
     //Select 2 parents and two random numbers in range [0,1]
@@ -61,32 +62,33 @@ void Deme::compute_next_generation()
     }
     //Store potentially mutated pair in vector
     auto new_pair = first_parent->recombine(second_parent);
+    //Unpack vector of chromosome pairs into vector of chromosomes
     mutated_chromosomes.push_back(new_pair.first);
     mutated_chromosomes.push_back(new_pair.second);
   }
-  //Unpack vector of chromosome pairs into vector of chromosomes
+  //release memory
   for (auto& elem:pop_){
-	delete elem; //release memory
+	delete elem; 
   }
   pop_ = mutated_chromosomes;
 
 }
 
 // Return a copy of the chromosome with the highest fitness.
-
 bool comp_fit(Chromosome* city_a, Chromosome* city_b)
 { //used for comparisons in get best
 	  return city_a->get_fitness() < city_b->get_fitness();
 }
 
-
+//Finds chromosome with best fit
+//
 const Chromosome* Deme::get_best() const
 { 
-	return *std::max_element(pop_.begin(), pop_.end(), comp_fit); //finds chromosome with best fit
+	return *std::max_element(pop_.begin(), pop_.end(), comp_fit); 
 
 }
 
-// Function for op parameter of std::acumulate, as used in select_parent().
+// Function for parameter of std::accumulate, as used in select_parent().
 double fitnessAccumulation(double sum, Chromosome* chromosome){
 	return sum - chromosome->get_fitness(); // Add the fitness of chromosome to sum and return it.
 }
@@ -95,15 +97,14 @@ double fitnessAccumulation(double sum, Chromosome* chromosome){
 // return a pointer to that chromosome.
 Chromosome* Deme::select_parent()
 {
+	double sumOfFitness = std::accumulate(pop_.begin(), pop_.end(), 0.0, fitnessAccumulation); // Use STL to find sum.
 
-	double sumOfFitness = std::accumulate(pop_.begin(), pop_.end(), 0.0, fitnessAccumulation);
-
-	//Calculate R
+	//Calculate R.
 	std::uniform_real_distribution<double> distribution (0.0, sumOfFitness); // distribution will return a double between 0 and sumOfFitness when called with a generator.
 	double R = distribution(generator_); // generate R.
 
 
-	double P = 0.0; // Initialize P
+	double P = 0.0; // Initialize P.
 
 
 	for(Chromosome* chromo:pop_){ // For each chromosome in our population...
